@@ -8,6 +8,10 @@ import time
 # Check for parameter length
 if len(sys.argv) == 2:
 	n = int(sys.argv[1])
+	plot = 0
+elif len(sys.argv) == 3:
+	n = int(sys.argv[1])
+	plot = sys.argv[2]=='-p'
 else:
 	print("Expecting argument: Q-Folge.py <length>")
 	exit()
@@ -42,10 +46,12 @@ for i in range(n):
 plottime = (int(time.time()*1000) - t_ms)
 print("Done in " + str(plottime) + "ms.\n")
 
-# Open image
-#img.save('q.bmp', 'BMP')
 
 os.system('echo "' + str(n) + ',' + str(int(time.time()*1000) - t_start) +
 	';" >> runtimeStats.csv')
-#os.system('gwenview q.bmp')
-#os.system('rm q.bmp')
+
+# Open image
+if plot:
+	img.save('q.bmp', 'BMP')
+	os.system('gwenview q.bmp')
+	os.system('rm q.bmp')
